@@ -6,24 +6,21 @@ public class UserContextDTO {
     private String contactNo;
     private String address;
     private String jwtToken;
-    private Status status;
 
-    public UserContextDTO(Status status) {
+    public UserContextDTO() {
         this.email = null;
         this.name = null;
         this.contactNo = null;
         this.address = null;
         this.jwtToken = null;
-        this.status = status;
     }
 
-    public UserContextDTO(String email, String name, String contactNo, String address, String jwtToken, Status status) {
+    public UserContextDTO(String email, String name, String contactNo, String address, String jwtToken) {
         this.email = email;
         this.name = name;
         this.contactNo = contactNo;
         this.address = address;
         this.jwtToken = jwtToken;
-        this.status = status;
     }
 
     public String getEmail() {
@@ -64,13 +61,5 @@ public class UserContextDTO {
 
     public void setJwtToken(String jwtToken) {
         this.jwtToken = jwtToken;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }

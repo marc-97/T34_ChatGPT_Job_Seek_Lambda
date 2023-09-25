@@ -1,6 +1,5 @@
 package org.t34.entity;
 
-import org.t34.dto.Status;
 import org.t34.dto.UserContextDTO;
 import org.t34.util.GeneralHelper;
 
@@ -87,7 +86,7 @@ public class User {
     }
 
     public UserContextDTO toUserContextDTO() {
-        String jwtToken = GeneralHelper.encodeJWT(email);
-        return new UserContextDTO(email, name, contactNo, address, jwtToken, Status.VALID);
+        String jwtToken = GeneralHelper.encodeJWT(userId.toString());
+        return new UserContextDTO(email, name, contactNo, address, jwtToken);
     }
 }

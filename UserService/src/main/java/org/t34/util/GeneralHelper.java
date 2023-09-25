@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.binary.Hex;
+import org.t34.exception.InvalidTokenException;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -60,10 +61,14 @@ public class GeneralHelper {
         return builder.compact();
     }
 
-    public static String decodeJWT(String jwt) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary("SECRET_KEY"))
-                .parseClaimsJws(jwt).getBody();
-        return claims.getSubject();
+    public static int decodeJWT(String jwt) throws InvalidTokenException{
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(DatatypeConverter.parseBase64Binary("SECRET_KEY"))
+                    .parseClaimsJws(jwt).getBody();
+            return Integer.parseInt(claims.getSubject());
+        } catch (Exception ex) {
+            throw new InvalidTokenException(ex.getMessage());
+        }
     }
 }
