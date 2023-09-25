@@ -1,46 +1,31 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Resources:
-  # See https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
-  # for more info to see how to tune the lambda function configs based on your use case.
-  AppFunction:
+  UserService:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: java11
       Handler: org.t34.App::handleRequest
       Timeout: 60
-      MemorySize: 512
-      CodeUri: LoginLambda
-      # Attach policies here to give the function permission to access other AWS resources if needed
-      # See: https://github.com/awslabs/serverless-application-model/blob/master/docs/policy_templates.rst
-      # eg:
-      #Policies:
-      # - S3ReadPolicy:
-      #     BucketName: test-bucket
+      MemorySize: 512 
       Events:
         Login:
           Type: Api
           Properties:
-            Path: /login
+            Path: '/login'
             Method: post
-#        AddItem:
-#          Type: Api
-#          Properties:
-#            Path: /consignment/{id}/item
-#            Method: post
-#        CheckIn:
-#          Type: Api
-#          Properties:
-#            Path: /consignment/{id}/checkin
-#            Method: post
-#        ViewConsignment:
-#          Type: Api
-#          Properties:
-#            Path: /consignment/{id}
-#            Method: get
-      Environment:
-        Variables:
-          DB_URL: jdbc:mysql://localhost/t34
-          DB_USER: root
-          DB_PASSWORD: password
-          PBKDF2_SALT: "salt"
+        Create:
+          Type: Api
+          Properties:
+            Path: '/create'
+            Method: post
+        Update:
+          Type: Api
+          Properties:
+            Path: '/update'
+            Method: post
+        View:
+          Type: Api
+          Properties:
+            Path: '/view'
+            Method: post

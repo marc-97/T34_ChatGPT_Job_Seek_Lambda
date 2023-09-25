@@ -47,6 +47,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
         String jwt = input.getHeaders().get(Config.AUTH_HEADER);
 
         try {
+            logger.info(OBJECT_MAPPER.writeValueAsString(input));
             if (!input.getHttpMethod().equalsIgnoreCase("POST")) {
                 throw new Exception("Only post method is allowed");
             }
