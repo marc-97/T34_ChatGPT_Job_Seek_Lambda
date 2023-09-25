@@ -45,7 +45,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
         int responseCode = 200;
         String body = input.getBody();
         logger.info("received request (method: {}) (path: {}), (body: {})", input.getHttpMethod(), input.getPath(), body);
-        String jwt = input.getHeaders().get("AUTH");
+        String jwt = input.getHeaders().get(Config.AUTH_HEADER);
 
         try {
             if (!input.getHttpMethod().equalsIgnoreCase("POST")) {

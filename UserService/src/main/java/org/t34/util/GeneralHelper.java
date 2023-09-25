@@ -30,10 +30,8 @@ public class GeneralHelper {
 
     public static String hashPassword(String password) {
         try {
-//            String salt = System.getenv("PBKDF2_salt");
-            String salt = "SALT";
+            String salt = Config.PW_SALT;
             int iterations = 1000;
-//            int iterations = Integer.parseInt(System.getenv("PBKDF2_iterations"));
             SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA256" );
             PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), iterations, 256);
             SecretKey key = skf.generateSecret( spec );
@@ -47,7 +45,7 @@ public class GeneralHelper {
     public static String encodeJWT(String subject) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary("SECRET_KEY");
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(Config.JWT_SECRET);
         LocalDateTime issueDate = LocalDateTime.now();
         LocalDateTime expiryDate = issueDate.plusHours(1);
 
@@ -64,7 +62,7 @@ public class GeneralHelper {
     public static int decodeJWT(String jwt) throws InvalidTokenException{
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary("SECRET_KEY"))
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(Config.JWT_SECRET))
                     .parseClaimsJws(jwt).getBody();
             return Integer.parseInt(claims.getSubject());
         } catch (Exception ex) {
