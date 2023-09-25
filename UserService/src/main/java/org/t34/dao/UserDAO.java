@@ -40,4 +40,28 @@ public class UserDAO {
             throw new NonUniqueResultException();
         }
     }
+
+    public Optional<User> findById(int userId) {
+        Session session = sessionFactory.openSession();
+        TypedQuery<User> query = session.createNativeQuery("SELECT * FROM user WHERE userId = ?", User.class);
+        query.setParameter(1, userId);
+        List<User> result = query.getResultList();
+        session.close();
+        if (result.isEmpty()) {
+            return Optional.empty();
+        } else if (result.size() == 1){
+            return Optional.of(result.get(0));
+        } else {
+            throw new NonUniqueResultException();
+        }
+    }
+
+    public User update(User user) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        User updatedUser = (User) session.merge(user);
+        transaction.commit();
+        session.close();
+        return updatedUser;
+    }
 }

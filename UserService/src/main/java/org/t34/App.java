@@ -12,8 +12,11 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.t34.entity.User;
+import org.t34.exception.InvalidTokenException;
 import org.t34.service.UserService;
 import org.t34.dto.LoginDTO;
+import org.t34.util.Config;
+import org.t34.util.GeneralHelper;
 
 /**
  * Lambda function entry point. You can change to use other pojo type or implement
@@ -42,6 +45,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
         int responseCode = 200;
         String body = input.getBody();
         logger.info("received request (method: {}) (path: {}), (body: {})", input.getHttpMethod(), input.getPath(), body);
+        String jwt = input.getHeaders().get("AUTH");
 
         try {
             if (!input.getHttpMethod().equalsIgnoreCase("POST")) {
@@ -55,6 +59,12 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
                 case "/create":
                     result = userService.create(OBJECT_MAPPER.readValue(body, User.class));
                     break;
+                case "/update":
+                    result = userService.update(OBJECT_MAPPER.readValue(body, User.class), GeneralHelper.decodeJWT(jwt));
+                    break;
+                case "/view":
+                    result = userService.view(GeneralHelper.decodeJWT(jwt));
+                    break;
                 default:
                     throw new NotFoundException("Resource not found");
             }
@@ -62,9 +72,15 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
             responseCode = 200;
             flushConnectionPool();
         } catch (NotFoundException ex) {
+            logger.error(ex.getMessage());
             responseBody = ex.getMessage();
             responseCode = 404;
+        } catch (InvalidTokenException ex) {
+            logger.error(ex.getMessage());
+            responseBody = ex.getMessage();
+            responseCode = 401;
         } catch (Exception ex) {
+            logger.error(ex.getMessage());
             responseBody = ex.getMessage();
             responseCode = 500;
         }
