@@ -15,7 +15,6 @@ import org.t34.entity.User;
 import org.t34.exception.InvalidTokenException;
 import org.t34.service.UserService;
 import org.t34.dto.LoginDTO;
-import org.t34.util.Config;
 import org.t34.util.GeneralHelper;
 
 /**

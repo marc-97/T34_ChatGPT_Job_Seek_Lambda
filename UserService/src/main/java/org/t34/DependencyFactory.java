@@ -5,7 +5,6 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.t34.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.t34.util.Config;
 
 import java.util.*;
 

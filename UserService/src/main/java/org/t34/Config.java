@@ -1,4 +1,4 @@
-package org.t34.util;
+package org.t34;
 
 public class Config {
     public static final String AUTH_HEADER = "AUTH";

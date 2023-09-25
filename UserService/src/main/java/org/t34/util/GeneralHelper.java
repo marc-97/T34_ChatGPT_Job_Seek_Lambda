@@ -6,6 +6,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.binary.Hex;
+import org.t34.Config;
 import org.t34.exception.InvalidTokenException;
 
 import javax.crypto.SecretKey;
