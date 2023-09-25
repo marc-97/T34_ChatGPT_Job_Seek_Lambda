@@ -55,6 +55,7 @@ public class UserService {
         user.setAddress(updatedUser.getAddress());
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
+        user.setContactNo(updatedUser.getContactNo());
         userDAO.update(user);
         logger.info("Exit update success");
         return "OK";
