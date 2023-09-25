@@ -3,11 +3,14 @@ package org.t34;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariDataSource;
+import javassist.NotFoundException;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.t34.entity.User;
 import org.t34.service.UserService;
 import org.t34.dto.LoginDTO;
@@ -21,6 +24,7 @@ import org.t34.dto.LoginDTO;
 public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> {
     private final SessionFactory sessionFactory;
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public App() {
@@ -32,29 +36,42 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
     }
 
     @Override
-    public Object handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
-        // TODO: invoking the api call using rdsClient.
-        Object result = "OK";
+    public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
+        APIGatewayProxyResponseEvent responseEvent = new APIGatewayProxyResponseEvent();
+        String responseBody = "OK";
+        int responseCode = 200;
         String body = input.getBody();
+        logger.info("received request (method: {}) (path: {}), (body: {})", input.getHttpMethod(), input.getPath(), body);
 
         try {
-            switch (input.getResource()) {
+            if (!input.getHttpMethod().equalsIgnoreCase("POST")) {
+                throw new Exception("Only post method is allowed");
+            }
+            Object result = null;
+            switch (input.getPath()) {
                 case "/login":
                     result = userService.login(OBJECT_MAPPER.readValue(body, LoginDTO.class));
                     break;
                 case "/create":
                     result = userService.create(OBJECT_MAPPER.readValue(body, User.class));
                     break;
+                default:
+                    throw new NotFoundException("Resource not found");
             }
+            responseBody = OBJECT_MAPPER.writeValueAsString(result);
+            responseCode = 200;
+            flushConnectionPool();
+        } catch (NotFoundException ex) {
+            responseBody = ex.getMessage();
+            responseCode = 404;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            responseBody = ex.getMessage();
+            responseCode = 500;
         }
-        flushConnectionPool();
-        try {
-            return OBJECT_MAPPER.writeValueAsString(result);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        responseEvent.setBody(responseBody);
+        responseEvent.setStatusCode(responseCode);
+        logger.info("response - body: {} status: {}", responseEvent.getBody(), responseEvent.getStatusCode());
+        return responseEvent;
     }
 
     private void flushConnectionPool() {
