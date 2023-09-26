@@ -12,20 +12,20 @@ Resources:
         Login:
           Type: Api
           Properties:
-            Path: '/login'
+            Path: '/user/login'
             Method: post
         Create:
           Type: Api
           Properties:
-            Path: '/create'
+            Path: '/user/create'
             Method: post
         Update:
           Type: Api
           Properties:
-            Path: '/update'
+            Path: '/user/update'
             Method: post
         View:
           Type: Api
           Properties:
-            Path: '/view'
+            Path: '/user/view'
             Method: post

@@ -53,16 +53,16 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
             }
             Object result = null;
             switch (input.getPath()) {
-                case "/login":
+                case "/user/login":
                     result = userService.login(OBJECT_MAPPER.readValue(body, LoginDTO.class));
                     break;
-                case "/create":
+                case "/user/create":
                     result = userService.create(OBJECT_MAPPER.readValue(body, User.class));
                     break;
-                case "/update":
+                case "/user/update":
                     result = userService.update(OBJECT_MAPPER.readValue(body, User.class), GeneralHelper.decodeJWT(jwt));
                     break;
-                case "/view":
+                case "/user/view":
                     result = userService.view(GeneralHelper.decodeJWT(jwt));
                     break;
                 default:
