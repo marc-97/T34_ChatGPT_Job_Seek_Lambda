@@ -1,0 +1,5 @@
+START RequestId: 43507c4f-4fb1-41a3-8ec5-d8a63b143b90 Version: $LATEST
+{}
+END RequestId: 43507c4f-4fb1-41a3-8ec5-d8a63b143b90
+REPORT RequestId: 43507c4f-4fb1-41a3-8ec5-d8a63b143b90	Init Duration: 0.07 ms	Duration: 689.36 ms	Billed Duration: 690 ms	Memory Size: 128 MB	Max Memory Used: 128 MB	
+{"statusCode": 200, "body": "{\"message\": null}"}

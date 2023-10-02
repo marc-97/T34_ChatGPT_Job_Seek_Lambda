@@ -1,0 +1,48 @@
+Jeffrey Lim
+jefflime.1993@gmail.com
+Singapore
+
+Summary
+An Enterprise and IT Architect with over 5 years of leadership experience in designing innovative business solutions for Fintech and advertising clients. Skilled in MySQL, cloud computing, information management and application development. Demonstrated mastery in evaluating requirements for business application integration and service activation. Proven mentor and training with expertise in communicating across organisational levels.
+
+Work experience
+
+Enterprise Architect
+Ulysses Company
+10/10/2019 - Present
+
+analysed clients' business strategies and determine system architecture requirements to achieve business goals.
+formulate strategic plans for component development to sustain future goals.
+developed data architecture design to facilitate targeted customer analysis
+Sr. Solution Architect
+Odysseus Corp
+10/10/2017 - 10/09/2019
+
+led the team in designing and implementing applications with software
+collaborated with business analysts and technical support teams
+Solution Architect
+Finnegan Company
+10/10/2015 - 10/09/2017
+
+launched complex recovery solutions to safeguard mission-critical data
+implemented application developments, resolved performance issues and provided end user training on hardware and software.
+Education experience
+Bachelor of Science - Software Engineering and Computer Science
+University of Engineering, Chicago
+2002
+
+published a research paper on automated data gathering complexities
+held the Lead Manager position for the Software Whiz Club
+Skills
+
+SAP Business Warehouse
+Apache Kafka
+ServiceNow
+Informatica
+data management
+software development cycle
+big data analytics
+Enterprise Service Bus (ESB)
+Certifications
+Netegrity SiteMinder 4.x & 5.x Administration and Deployment
+iPlanet Directory 4.x Architecture Deployment
