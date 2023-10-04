@@ -3,6 +3,41 @@
         {
             "type": "aws-sam",
             "request": "direct-invoke",
+            "name": "SampleApp:HelloWorldFunction (python3.11)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "${workspaceFolder}/SampleApp/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {},
+                "runtime": "python3.11"
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "API SampleApp:HelloWorldFunction (python3.11)",
+            "invokeTarget": {
+                "target": "api",
+                "templatePath": "${workspaceFolder}/SampleApp/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "api": {
+                "path": "/hello",
+                "httpMethod": "get",
+                "payload": {
+                    "json": {}
+                }
+            },
+            "lambda": {
+                "runtime": "python3.11"
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
             "name": "SampleService:HelloWorldFunction (python3.11)",
             "invokeTarget": {
                 "target": "template",

@@ -3,7 +3,7 @@ import boto3
 import openai
 
 def lambda_handler(event, context):
-    resume_text = convert_s3_file_to_text(event.get('objectKey'))
+    resume_text = convert_s3_file_to_text(json.loads(event['body']).get('objectKey'))
     question = "Provide the below resume content, pretend yourself as an experienced interviewer, review and give some suggestion to the content. \n" + resume_text
     print("Question to Open AI:", question)
     res = get_response_from_open_ai(question)
