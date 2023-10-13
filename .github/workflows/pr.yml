@@ -5,6 +5,7 @@ on:
       - main
 jobs:
   test:
+    name: Test UserService
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,4 +16,5 @@ jobs:
           distribution: 'temurin'
           architecture: x64
       - name: Test with maven
+        working-directory: ./UserService
         run: mvn verify
