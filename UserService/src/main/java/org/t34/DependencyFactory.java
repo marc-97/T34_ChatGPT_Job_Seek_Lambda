@@ -2,6 +2,8 @@ package org.t34;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.t34.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,6 +15,7 @@ import java.util.*;
  */
 public class DependencyFactory {
     private static SessionFactory sessionFactory;
+    private static final Logger logger = LoggerFactory.getLogger(DependencyFactory.class);
 
     private DependencyFactory() {}
 
@@ -22,6 +25,10 @@ public class DependencyFactory {
             return sessionFactory;
         }
 
+        logger.info(Config.DB_URL);
+        logger.info(Config.DB_SCHEMA);
+        logger.info(Config.DB_USER);
+        logger.info(Config.DB_PASSWORD);
         Map<String, String> settings = new HashMap<>();
         settings.put("hibernate.connection.url", Config.DB_URL); // Correct JDBC URL format
         settings.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
