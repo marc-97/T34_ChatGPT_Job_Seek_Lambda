@@ -1,5 +1,28 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+Parameters:
+  authHeader:
+    Type: String
+    Default: Auth
+  jwtSecretKey:
+    Type: String
+    Default: SECRET_KEY
+  pwSalt:
+    Type: String
+    Default: SALT
+  dbUrl:
+    Type: String
+    Default: host.docker.internal:3306/t34
+  dbUser:
+    Type: String
+    Default: root
+  dbPassword:
+    Type: String
+    Default: password
+  dbSchema:
+    Type: String
+    Default: t34
+
 Resources:
   UserService:
     Type: AWS::Serverless::Function
@@ -29,3 +52,12 @@ Resources:
           Properties:
             Path: '/user/view'
             Method: post
+      Environment:
+        Variables:
+          AUTH_HEADER: !Ref authHeader
+          JWT_SECRET_KEY: !Ref jwtSecretKey
+          PW_SALT: !Ref pwSalt
+          DB_URL: !Ref dbUrl
+          DB_USER: !Ref dbUser
+          DB_PASSWORD: !Ref dbPassword
+          DB_SCHEMA: !Ref dbSchema
