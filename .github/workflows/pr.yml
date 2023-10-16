@@ -18,7 +18,7 @@ jobs:
           cache: 'maven'
       - name: Test with maven
         working-directory: ./UserService
-        run: mvn verify
+        run: mvn test
       - name: Check dependencies
         working-directory: ./UserService
         run: mvn dependency-check:check

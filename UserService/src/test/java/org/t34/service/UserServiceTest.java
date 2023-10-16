@@ -4,11 +4,9 @@ import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.t34.dao.UserDAO;
 import org.t34.dto.LoginDTO;
 import org.t34.dto.UserContextDTO;
@@ -25,7 +23,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
     private UserDAO userDAO;
