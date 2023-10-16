@@ -36,7 +36,6 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
-        System.out.println("Setup");
         closeable = MockitoAnnotations.openMocks(this);
         userService = new UserService(sessionFactory);
         Field userDAOFIeld = userService.getClass().getDeclaredField("userDAO");
@@ -55,7 +54,6 @@ public class UserServiceTest {
 
     @Test
     public void testLoginValidUser() throws NotFoundException, InvalidPasswordException {
-        System.out.println("Test login");
         LoginDTO loginDTO = new LoginDTO("user@example.com", "password");
         User user = new User(1L, "user@example.com", "hashedPassword");
         when(userDAO.findByEmail(loginDTO.getEmail())).thenReturn(Optional.of(user));
