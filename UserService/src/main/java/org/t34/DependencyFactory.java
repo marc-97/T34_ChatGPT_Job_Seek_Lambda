@@ -25,10 +25,6 @@ public class DependencyFactory {
             return sessionFactory;
         }
 
-        logger.info(Config.DB_URL);
-        logger.info(Config.DB_SCHEMA);
-        logger.info(Config.DB_USER);
-        logger.info(Config.DB_PASSWORD);
         Map<String, String> settings = new HashMap<>();
         settings.put("hibernate.connection.url", Config.DB_URL); // Correct JDBC URL format
         settings.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");

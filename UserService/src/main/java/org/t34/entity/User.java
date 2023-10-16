@@ -37,6 +37,12 @@ public class User {
     public User() {
     }
 
+    public User(Long userId, String email, String hashedPassword) {
+        this.userId = userId;
+        this.email = email;
+        password = hashedPassword;
+    }
+
     public Long getUserId() {
         return userId;
     }

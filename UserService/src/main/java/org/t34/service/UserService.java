@@ -1,6 +1,5 @@
 package org.t34.service;
 
-import javassist.NotFoundException;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +8,7 @@ import org.t34.dto.LoginDTO;
 import org.t34.dto.UserContextDTO;
 import org.t34.entity.User;
 import org.t34.exception.InvalidPasswordException;
+import org.t34.exception.NotFoundException;
 import org.t34.util.GeneralHelper;
 
 import java.util.Optional;

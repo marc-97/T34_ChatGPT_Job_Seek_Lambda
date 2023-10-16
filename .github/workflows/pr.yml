@@ -13,8 +13,26 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'temurin'
+          distribution: 'adopt'
           architecture: x64
+          cache: 'maven'
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Test with maven
         working-directory: ./UserService
-        run: mvn verify
+        run: mvn test
+      - name: Check dependencies
+        working-directory: ./UserService
+        run: mvn dependency-check:check
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-result-reports
+          path: |
+            UserService/target/site/jacoco/
+            UserService/target/surefire-reports/
+            UserService/target/dependency-check-report.html
