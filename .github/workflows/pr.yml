@@ -16,6 +16,9 @@ jobs:
           distribution: 'adopt'
           architecture: x64
           cache: 'maven'
+      - name: mvn version
+        working-directory: ./UserService
+        run: mvn --version
       - name: Test with maven
         working-directory: ./UserService
         run: mvn test
