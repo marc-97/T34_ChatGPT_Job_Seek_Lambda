@@ -28,3 +28,11 @@ jobs:
       - name: Check dependencies
         working-directory: ./UserService
         run: mvn dependency-check:check
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-result-reports
+          path: |
+            target/site/jacoco/
+            target/surefire-reports/
+            target/dependency-check-report.html
