@@ -36,6 +36,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setUp() throws NoSuchFieldException, IllegalAccessException {
+        System.out.println("Setup");
         closeable = MockitoAnnotations.openMocks(this);
         userService = new UserService(sessionFactory);
         Field userDAOFIeld = userService.getClass().getDeclaredField("userDAO");
