@@ -55,6 +55,7 @@ public class UserServiceTest {
 
     @Test
     public void testLoginValidUser() throws NotFoundException, InvalidPasswordException {
+        System.out.println("Test login");
         LoginDTO loginDTO = new LoginDTO("user@example.com", "password");
         User user = new User(1L, "user@example.com", "hashedPassword");
         when(userDAO.findByEmail(loginDTO.getEmail())).thenReturn(Optional.of(user));
