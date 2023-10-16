@@ -33,6 +33,6 @@ jobs:
         with:
           name: test-result-reports
           path: |
-            target/site/jacoco/
-            target/surefire-reports/
-            target/dependency-check-report.html
+            UserService/target/site/jacoco/
+            UserService/target/surefire-reports/
+            UserService/target/dependency-check-report.html
