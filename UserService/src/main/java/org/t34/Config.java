@@ -7,5 +7,5 @@ public class Config {
     public static final String DB_URL = "jdbc:mysql://" + System.getenv("DB_URL");
     public static final String DB_USER = System.getenv("DB_USER");
     public static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
-    public static final String DB_SCHEMA = "t34";
+    public static final String DB_SCHEMA = System.getenv("DB_SCHEMA");
 }
