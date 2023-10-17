@@ -60,7 +60,7 @@ public class GeneralHelper {
         return builder.compact();
     }
 
-    public static int decodeJWT(String jwt) throws InvalidTokenException{
+    public static int decodeJWT(String jwt) throws InvalidTokenException {
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(Config.JWT_SECRET))
