@@ -1,8 +1,10 @@
-name: PR Test
+name: CI - UserService
 on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'UserService/**'
 jobs:
   test:
     name: Test UserService

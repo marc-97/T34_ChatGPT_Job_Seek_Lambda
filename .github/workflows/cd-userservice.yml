@@ -1,8 +1,10 @@
-name: Push deploy
+name: CD - UserService
 on:
   push:
     branches:
       - main
+    paths:
+      - 'UserService/**'
 jobs:
   deploy-user-service:
     name: Deploy user service
