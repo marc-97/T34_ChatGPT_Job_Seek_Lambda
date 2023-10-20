@@ -3,7 +3,8 @@ package org.t34.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.t34.dto.UserContextDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.t34.entity.User;
 
 import javax.persistence.NonUniqueResultException;
@@ -13,6 +14,8 @@ import java.util.Optional;
 
 public class UserDAO {
     private final SessionFactory sessionFactory;
+    private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
+
 
     public UserDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -21,9 +24,16 @@ public class UserDAO {
     public void save(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(user);
-        transaction.commit();
-        session.close();
+        try {
+            session.save(user);
+            transaction.commit();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            transaction.rollback();
+            throw ex;
+        } finally {
+            session.close();
+        }
     }
 
     public Optional<User> findByEmail(String email) {
@@ -59,9 +69,17 @@ public class UserDAO {
     public User update(User user) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        User updatedUser = (User) session.merge(user);
-        transaction.commit();
-        session.close();
+        User updatedUser = null;
+        try {
+            updatedUser = (User) session.merge(user);
+            transaction.commit();
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            transaction.rollback();
+            throw ex;
+        } finally {
+            session.close();
+        }
         return updatedUser;
     }
 }
