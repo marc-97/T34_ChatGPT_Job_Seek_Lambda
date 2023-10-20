@@ -1,6 +1,8 @@
 package org.t34.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,8 +11,9 @@ import org.t34.entity.User;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class UserDAOTest {
     private static SessionFactory sessionFactory;
@@ -49,6 +52,27 @@ public class UserDAOTest {
     }
 
     @Test
+    public void testSaveUserFailure() {
+        SessionFactory sessionFactory = mock(SessionFactory.class);
+        Session session = mock(Session.class);
+        Transaction transaction = mock(Transaction.class);
+
+        doThrow(new RuntimeException("Simulated exception")).when(session).save(any());
+        when(sessionFactory.openSession()).thenReturn(session);
+        when(session.beginTransaction()).thenReturn(transaction);
+
+        userDAO = new UserDAO(sessionFactory);
+
+        User user = new User();
+        user.setEmail("user@example.com");
+        user.setPassword("password");
+        assertThrows(RuntimeException.class, () -> userDAO.save(user));
+
+        verify(transaction).rollback();
+        verify(session).close();
+    }
+
+    @Test
     public void testFindById() {
         userDAO = new UserDAO(sessionFactory);
 
@@ -79,5 +103,26 @@ public class UserDAOTest {
 
         assertTrue(foundUser.isPresent());
         assertEquals("updated@example.com", foundUser.get().getEmail());
+    }
+
+    @Test
+    public void testUpdateUserFailure() {
+        SessionFactory sessionFactory = mock(SessionFactory.class);
+        Session session = mock(Session.class);
+        Transaction transaction = mock(Transaction.class);
+
+        doThrow(new RuntimeException("Simulated exception")).when(session).merge(any());
+        when(sessionFactory.openSession()).thenReturn(session);
+        when(session.beginTransaction()).thenReturn(transaction);
+
+        userDAO = new UserDAO(sessionFactory);
+
+        User user = new User();
+        user.setEmail("user@example.com");
+        user.setPassword("password");
+        assertThrows(RuntimeException.class, () -> userDAO.update(user));
+
+        verify(transaction).rollback();
+        verify(session).close();
     }
 }
