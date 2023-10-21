@@ -17,6 +17,10 @@ import org.t34.service.UserService;
 import org.t34.dto.LoginDTO;
 import org.t34.util.GeneralHelper;
 
+import java.util.Map;
+
+import static java.util.Map.entry;
+
 /**
  * Lambda function entry point. You can change to use other pojo type or implement
  * a different RequestHandler.
@@ -40,6 +44,12 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         APIGatewayProxyResponseEvent responseEvent = new APIGatewayProxyResponseEvent();
+        responseEvent.setHeaders(
+            Map.ofEntries(
+                entry("Content-Type", "application/json"),
+                entry("Access-Control-Allow-Origin", "*")
+            )
+        );
         String responseBody = "OK";
         int responseCode = 200;
         String body = input.getBody();
