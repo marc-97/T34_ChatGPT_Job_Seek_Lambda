@@ -33,6 +33,6 @@ Resources:
             Method: post
       Environment:
         Variables:
-          AWS_ACCESS_KEY_ID: !Ref awsAccessKeyId
-          AWS_SECRET_ACCESS_KEY: !Ref awsSecretAccessKey
+          S3_ACCESS_KEY_ID: !Ref awsAccessKeyId
+          S3_SECRET_ACCESS_KEY: !Ref awsSecretAccessKey
           GPT_API_KEY: !Ref gptApiKey
