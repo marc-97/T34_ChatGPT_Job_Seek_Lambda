@@ -1,0 +1,26 @@
+name: CD - RecommendationService
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'RecommendationService/**'
+jobs:
+  deploy-user-service:
+    name: Deploy recommendation service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v2
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Build with sam
+        working-directory: ./RecommendationService
+        run: sam build --use-container
+      - name: Deploy with sam
+        working-directory: ./RecommendationService
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides awsAccessKeyId=${{ secrets.AWS_ACCESS_KEY_ID }} awsSecretAccessKey=${{ secrets.AWS_SECRET_ACCESS_KEY }} gptApiKey=${{ secrets.GPT_API_KEY }}
