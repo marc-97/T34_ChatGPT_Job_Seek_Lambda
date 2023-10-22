@@ -1,6 +1,7 @@
 import json
 import boto3
 import openai
+import os
 
 def lambda_handler(event, context):
     resume_text = convert_s3_file_to_text(json.loads(event['body']).get('objectKey'))
@@ -10,6 +11,10 @@ def lambda_handler(event, context):
 
     return {
         "statusCode": 200,
+        "headers": {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
         "body": json.dumps(
             {
                 "message": res,
@@ -19,8 +24,8 @@ def lambda_handler(event, context):
 
 def convert_s3_file_to_text(object_key):
     aws_session = boto3.Session(
-        aws_access_key_id='xxx',
-        aws_secret_access_key='xxx',
+        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
     )
     s3 = aws_session.client('s3')
 
@@ -30,7 +35,7 @@ def convert_s3_file_to_text(object_key):
     return data
     
 def get_response_from_open_ai(question):
-    openai.api_key = 'xxx'
+    openai.api_key = os.environ.get('GPT_API_KEY')
 
     response = openai.Completion.create(
         model = "text-davinci-003",
