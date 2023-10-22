@@ -24,8 +24,8 @@ def lambda_handler(event, context):
 
 def convert_s3_file_to_text(object_key):
     aws_session = boto3.Session(
-        aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-        aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+        aws_access_key_id=os.environ.get('S3_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.environ.get('S3_SECRET_ACCESS_KEY'),
     )
     s3 = aws_session.client('s3')
 
