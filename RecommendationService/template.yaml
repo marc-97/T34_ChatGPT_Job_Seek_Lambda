@@ -1,5 +1,15 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+Parameters:
+  awsAccessKeyId:
+    Type: String
+    Default: awsAccessKeyId
+  awsSecretAccessKey:
+    Type: String
+    Default: awsSecretAccessKey
+  gptApiKey:
+    Type: String
+    Default: gptApiKey
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -21,3 +31,8 @@ Resources:
           Properties:
             Path: /recommendation/resume
             Method: post
+      Environment:
+        Variables:
+          AWS_ACCESS_KEY_ID: !Ref awsAccessKeyId
+          AWS_SECRET_ACCESS_KEY: !Ref awsSecretAccessKey
+          GPT_API_KEY: !Ref gptApiKey
