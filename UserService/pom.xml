@@ -20,7 +20,7 @@
         <junit5.version>5.8.1</junit5.version>
         <jackson-databind.version>2.15.3</jackson-databind.version>
         <io-jsonwebtoken.version>0.9.1</io-jsonwebtoken.version>
-        <log4j.version>2.12.4</log4j.version>
+        <log4j.version>2.7</log4j.version>
         <hibernate.version>5.4.33.Final</hibernate.version>
     </properties>
 
