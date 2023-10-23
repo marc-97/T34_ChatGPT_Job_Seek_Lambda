@@ -51,7 +51,6 @@ public class UserService {
             throw new NotFoundException("User not found");
         }
         User user = optionalUser.get();
-        user.setPassword(GeneralHelper.hashPassword(updatedUser.getPassword()));
         user.setAddress(updatedUser.getAddress());
         user.setName(updatedUser.getName());
         user.setEmail(updatedUser.getEmail());
