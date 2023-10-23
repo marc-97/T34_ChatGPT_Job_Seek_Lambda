@@ -63,7 +63,7 @@ public class App implements RequestHandler<APIGatewayProxyRequestEvent, Object> 
             }
             Object result = null;
             switch (input.getPath()) {
-                case "/user/login":
+                case "/user/login2":
                     result = userService.login(OBJECT_MAPPER.readValue(body, LoginDTO.class));
                     break;
                 case "/user/create":
