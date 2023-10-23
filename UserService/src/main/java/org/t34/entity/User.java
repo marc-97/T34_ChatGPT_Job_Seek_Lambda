@@ -1,5 +1,6 @@
 package org.t34.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.t34.dto.UserContextDTO;
 import org.t34.util.GeneralHelper;
 
@@ -59,6 +60,7 @@ public class User {
         this.email = email;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getPassword() {
         return password;
     }
