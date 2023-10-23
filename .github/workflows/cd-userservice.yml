@@ -23,4 +23,4 @@ jobs:
         run: sam build --use-container
       - name: Deploy with sam
         working-directory: ./UserService
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides dbUrl=${{ secrets.DB_URL }} dbUser=${{ secrets.DB_USER }} dbPassword=${{ secrets.DB_PASSWORD }}
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides dbUrl=${{ secrets.DB_URL }} dbUser=${{ secrets.DB_USER }} dbPassword=${{ secrets.DB_PASSWORD }} authHeader=${{ secrets.AUTH_HEADER }}
