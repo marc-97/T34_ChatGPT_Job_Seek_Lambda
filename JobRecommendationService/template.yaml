@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  gptApiKey:
+    Type: String
+    Default: gptApiKey
+Description: >
+  job-rec-svc
+  
+  Job Recommendation Service using ChatGPT
+  
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+#Globals:
+#  Function:
+#    Timeout: 300
+#    MemorySize: 512
+    
+
+Resources:
+
+  JobRecSvcFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      #CodeUri: main/java/com/example/
+      Handler: com.example.mainRequestHandler::handleRequest
+      Runtime: java17
+      Timeout: 300
+      MemorySize: 512
+      Architectures:
+        - x86_64
+      Events:
+        JobRec:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /job-rec-svc
+            Method: post
+
+      Environment:
+        Variables:
+          chatgptapikey: !Ref gptApiKey 
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  JobRecSvcApi:
+    Description: "API Gateway endpoint URL for Prod stage for Job Recommendation Service function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/job-rec-svc/"
+  JobRecSvcFunction:
+    Description: "Job Recommendation Service Lambda Function ARN"
+    Value: !GetAtt JobRecSvcFunction.Arn
+  JobRecSvcFunctionIamRole:
+    Description: "Implicit IAM Role created for Job Recommendation Service function"
+    Value: !GetAtt JobRecSvcFunction.Arn
+
+
+# Links used:
+# Main one used
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html
+# 
+# Others:
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-controlling-access-to-apis-customize-response.html
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-api.html#sam-api-gatewayresponses
+# https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-swagger-extensions-gateway-responses.html
+# https://docs.aws.amazon.com/apigateway/latest/api/API_GetGatewayResponses.html
+# https://docs.aws.amazon.com/apigateway/latest/api/API_GatewayResponse.html
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigateway-restapi.html
+# https://stackoverflow.com/questions/51183925/using-sam-application-how-to-define-body-mapping-templates
+# https://docs.aws.amazon.com/apigateway/latest/developerguide/api-as-lambda-proxy-export-swagger-with-extensions.html
+#
+
+
+
